@@ -15,7 +15,7 @@ CREATE TABLE USER_TBL
 (
     USER_ID VARCHAR2(20) PRIMARY KEY,   		-- 사용자 ID (3~10자리)
     USER_PW VARCHAR2(24)    NOT NULL,			-- 사용자 PW (4~12자리)
-    USER_NM VARCHAR2(20)   UNIQUE NOT NULL,     -- 사용자 이름
+    USER_NM VARCHAR2(20)   NOT NULL,            -- 사용자 이름
     USER_TEL VARCHAR2(13)    NOT NULL        	-- 사용자 전화번호
 );
 
@@ -48,7 +48,7 @@ COMMIT;
 CREATE TABLE ORDER_TBL
 (
     RES_NUM     NUMBER          PRIMARY KEY,            -- 예약 번호
-    USER_NM     REFERENCES USER_TBL(USER_NM),           -- 사용자 이름
+    USER_ID     REFERENCES USER_TBL(USER_ID),           -- 사용자 ID
     DES_NUM     REFERENCES HAIRSALON_TBL(DES_NUM),      -- 디자이너 사원번호
     RES_INDATE  DATE            DEFAULT SYSDATE,        -- 예약 날짜
     HAIR_TYPE   VARCHAR2(20)    NOT NULL,               -- 시술 종류
@@ -64,14 +64,14 @@ VALUES (res_num_seq.nextval,'전우치',2,'웨이브펌', 150000);
 SELECT * FROM ORDER_TBL;
 commit;
 
--- 댓글 테이블 REVIEW_TBL : USER_ID, DES_NUM, SCORE, REVIEW, REV_INDATE
+-- 후기 테이블 REVIEW_TBL : RES_NUM, USER_ID, SCORE, REV_CONTENT, REV_INDATE
 CREATE TABLE REVIEW_TBL
-(
-    USER_NM PRIMARY KEY REFERENCES USER_TBL(USER_NM),  -- 사용자 이름
-    DES_NUM REFERENCES HAIRSALON_TBL(DES_NUM),    		-- 디자이너 사원번호
-    SCORE   NUMBER(5)       NOT NULL,               	-- 평점
-    REVIEW  VARCHAR2(1000)  NOT NULL,               	-- 후기
-    REV_INDATE  DATE DEFAULT SYSDATE         			-- 작성 날짜
+(	
+	RES_NUM NUMBER PRIMARY KEY REFERENCES ORDER_TBL(RES_NUM),	-- 예약 번호
+    USER_ID VARCHAR2(20) REFERENCES USER_TBL(USER_ID),          -- 사용자 ID
+    SCORE   NUMBER(1) DEFAULT 1,                              	-- 평점
+    REV_CONTENT  VARCHAR2(1000)  NOT NULL,                    	-- 후기
+    REV_INDATE  DATE DEFAULT SYSDATE                 			-- 작성 날짜
 );
 
 -- 시퀀스 생성

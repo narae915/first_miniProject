@@ -9,50 +9,73 @@
 <script type ="text/javascript" src ="/resources/js/jquery-3.6.0.min.js"></script>
 <script type = "text/javascript">
 
+// 예약 취소
+function deleteOrder(resNum){
 	
-function deleteOrder(){ // 예약 번호를 받아서 취소
-	var result = confirm("정말 취소하겠습니까");
-	
+	var result = confirm("정말 취소하겠습니까?");
+
 	if(result){
-		location.href = "/order/reserve?resNum=${order.resNum}";
+		location.href="/order/deleteOrder?resNum="+resNum; 
 	}
 }
 
-function updateOrder(){  //  userNm가 같으면 수정 페이지로
-	location.href = "/order/updateRes?userNm=${order.userNm}";
+//예약 수정
+function updateOrder(userId){  //  userNm가 같으면 수정 페이지로
+	location.href="/order/updateRes?userId="+userId;
 }
 
 </script>
+</head>
 <body>
-	<h1>나의 예약 리스트</h1>
-	<h3>(예약 완료)</h3>
-	
-	<c:if test = "${empty orderList }">
-		예약된 리스트가 없습니다.
-	</c:if>
-	
-	<c:if test="${not empty orderList }">
-		<c:forEach items ="${orderList }" var="order">
-			<table border ="1">
-				<tr>
-					<th colspan="2">예약 내용확인</th>
-				</tr>
-				<tr>
-					<th colspan= "2">디자이너</th>
-				</tr>
-				<tr>
-					<th colspan="2">날짜 및 시간</th>
-				</tr>
-				<tr>
-					<th colspan="2">위치</th>
-				</tr>
-<%-- 				<tr>
-					<td><input type="button" value="예약 취소" onclick="deleteOrder(${order.resNum});"></td>
-					<td><input type="button" value="수정" onclick ="updateOrder(${order.userNm });"></td>
-				</tr>  만일 orderList의 데이터가 2개이상 들어있다면 이 input태그도 2번 반복되서 나타납니다. 예약마다 수정삭제를 만들것인지, 하나의 수정삭제를 만들것인지--%>
-			</table>
-		</c:forEach>
-	</c:if>
+<h1>나의 예약 리스트</h1>
+<h3>(예약 완료)</h3>
 
+<c:if test = "${empty orderList }">
+	예약 내역이 없습니다.
+</c:if> 
+
+ <c:if test="${not empty orderList }"> 
+	<table border="1" >
+			<tr>
+				<th>예약 번호</th>
+				<th>디자이너&nbsp;시술&nbsp;가격</th>
+				<th colspan="2">수정&nbsp; 삭제</th>
+			</tr>
+	<c:forEach items ="${orderList }" var="order">
+		 <tr>
+			<td>${order.resNum }</td>
+			<td>${order.desNm }&nbsp;${order.hairType }&nbsp;${order.price}</td>
+			<td><input type="button" value="수정" onclick="updateOrder(${sessionScope.userId });"></td>
+			<td><input type="button" value="예약 취소" onclick="deleteOrder(${order.resNum });"></td>
+		</tr>
+	</c:forEach>		
+	</table>
+</c:if>
+	
+<hr color="green" size="5px" width="75%" align="left">
+<h3>과거 이용 내역</h3>
+<c:if test = "${empty pastList }">
+	과거 이용 내역이 없습니다.
+</c:if>
+
+<c:if test="${not empty pastList }">
+	<table border="1">
+		<tr>
+			<th>디자이너</th>
+			<th>시술</th>
+			<th>이용 날짜</th>
+			<th>리뷰 작성</th>
+		</tr>
+		<c:forEach items ="${pastList }" var="past">
+			<tr>
+				<td>${past.desNm }</td>
+				<td>${past.hairType }</td>
+				<td>${past.resIndate }</td>
+				<td><button onclick="window.open('/review?resNum=${past.resNum }','리뷰 작성',
+									'width=500,height=480,location=no,status=no,scrollbars=yes');">리뷰 작성</button></td>
+			</tr>
+		</c:forEach>
+	</table>
+</c:if>
 </body>
 </html>

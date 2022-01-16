@@ -6,7 +6,7 @@ import lombok.Data;
 public class OrderVO {
 	
 	private int resNum; //예약번호
-	private String userNm; // 사용자 이름
+	private String userId; // 사용자 ID
 	private int desNum; // 디자이너 사원번호
 	private String desNm;//디자이너 이름
 	private String resIndate; // 예약 날짜

@@ -4,10 +4,11 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hair.salon.dao.OrderMapper">
 
+	<!-- 예약 리스트 페이지 이동(조회) -->
 	<select id="getOrderList" parameterType="String" resultType="Order">
 		select
 		ot.res_num as resNum,
-	    ot.user_nm as userNm,
+	    ot.user_id as userId,
 	    to_char(ot.res_indate, 'yyyy-mm-dd HH24:MI:SS') as resIndate,
 	    ht.des_nm as desNm,
 	    ot.hair_type as hairType,
@@ -18,15 +19,37 @@
 	where
 	    ot.des_num = ht.des_num
 	    and
-	    ot.user_nm = #{userNm }
+	    ot.res_indate &gt;= sysdate
+	    and
+	    ot.user_id = #{userId }
 	</select>
+	
+	<!-- 과거 이용 리스트 조회 -->
+	<select id="getPastOrder" parameterType="String" resultType="Order">
+		select
+			ot.res_num as resNum,
+			ot.user_id as userId,
+			to_char(ot.res_indate, 'yyyy-mm-dd') as resIndate,
+			ht.des_nm as desNm,
+			ot.hair_type as hairType
+		from
+			order_tbl ot,
+			hairSalon_tbl ht
+		where
+			ot.des_num = ht.des_num
+			and
+			res_indate &lt; sysdate
+			and
+			ot.user_id = #{userId }
+	</select>
+	
 	
 	<!-- 예약 -->
 	<insert id = "insertReserve" parameterType = "Order">
 		insert into ORDER_TBL
 		(
 			res_Num,
-			user_Nm,
+			user_Id,
 			des_Num,
 			res_Indate,
 			hair_Type,
@@ -35,11 +58,31 @@
 		values
 		(
 			res_num_seq.nextval,
-			#{userNm },
+			#{userId },
 			#{desNum },
 			to_date(#{resIndate }, 'YYYY-MM-DDHH24:MI'),
 			#{hairType },
 			#{price }
+		)
+	</insert>
+	
+	<!-- 예약 취소 -->
+	<delete id ="deleteOrder" parameterType="int">
+		delete from ORDER_TBL
+		 where  
+		 	res_num = #{resNum }
+	</delete>
+	
+	<!-- 리뷰 작성 -->
+	<insert id="insertReview" parameterType="review">
+		insert into review_tbl(
+			user_id,
+			score,
+			rev_content
+		) values (
+			#{userId },
+			#{score },
+			#{revContent }		
 		)
 	</insert>
 </mapper>

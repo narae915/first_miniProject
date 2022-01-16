@@ -71,8 +71,6 @@ public class UserController {
 			logger.info("회원 가입 불가.");
 			return null;
 		}
-		
-		
 	}
 
     /* 로그인 페이지 이동 */
@@ -95,12 +93,14 @@ public class UserController {
 		
 		String errorMessage ="ID와 PW가 일치 하지 않습니다.";
 		
+		//로그인 실패시 에러메세지 출력
 		if(userNm == null) {
 			logger.info("로그인 실패");
-			
 			model.addAttribute("errorMessage",errorMessage);
 			returnUrl = "/user/login";
-		}else {
+			
+		// 로그인 성공시 jsp 저장
+		} else {
 			logger.info("로그인 성공");
 			session.setAttribute("loginId", userId);
 			session.setAttribute("loginName", userNm);
