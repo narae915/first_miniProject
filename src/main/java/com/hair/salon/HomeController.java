@@ -28,15 +28,15 @@ public class HomeController {
 	public String home(Model model) {
 		logger.info("HOME 메소드 실행(GET)");
 		
-//		ArrayList<ReviewVO> reviewList = new ArrayList<>();
-//		reviewList = service.getReviewList();
-//		
-//		if(reviewList != null) {
-//			logger.info("불러오기 성공");
-//			model.addAttribute("reviewList", reviewList);
-//		} else {
-//			logger.info("불러오기 실패");
-//		}
+		ArrayList<ReviewVO> reviewList = new ArrayList<>();
+		reviewList = service.getReviewList();
+		
+		if(reviewList != null) {
+			logger.info("불러오기 성공");
+			model.addAttribute("reviewList", reviewList);
+		} else {
+			logger.info("불러오기 실패");
+		}
 		return "home";
 	}
 
@@ -44,11 +44,12 @@ public class HomeController {
 	@RequestMapping(value = "/review", method = RequestMethod.GET)
 	public String review(int resNum, HttpSession session, Model model) {
 		logger.info("review 메소드 실행(GET)");
-		
 		logger.info("resNum : {}", resNum);
 		
-		String userNm = (String)session.getAttribute("loginName");
-		logger.info("loginName : {}", userNm);
+		OrderVO pastOrder = new OrderVO();
+		pastOrder = service.getPastOneOrder(resNum);
+		logger.info("pastOrder : {} ", pastOrder);
+		model.addAttribute("pastOrder", pastOrder);
 		
 		return "review";
 	}
@@ -58,7 +59,7 @@ public class HomeController {
 	public String review(ReviewVO review, HttpSession session) {
 		logger.info("resNum : {}", review.getResNum());
 		logger.info("score : {}", review.getScore());
-		logger.info("review : {}", review.getRevContent());
+		logger.info("revContent : {}", review.getRevContent());
 		
 		String userId = (String)session.getAttribute("loginId");
 		review.setUserId(userId);

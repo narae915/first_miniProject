@@ -71,8 +71,7 @@ function updateOrder(userId){  //  userNm가 같으면 수정 페이지로
 				<td>${past.desNm }</td>
 				<td>${past.hairType }</td>
 				<td>${past.resIndate }</td>
-				<td><button onclick="window.open('/review?resNum=${past.resNum }','리뷰 작성',
-									'width=500,height=480,location=no,status=no,scrollbars=yes');">리뷰 작성</button></td>
+				<td><button onclick="location.href='/review?resNum=${past.resNum }';">리뷰 작성</button></td>
 			</tr>
 		</c:forEach>
 	</table>

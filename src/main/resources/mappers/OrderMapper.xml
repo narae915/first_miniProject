@@ -76,13 +76,45 @@
 	<!-- 리뷰 작성 -->
 	<insert id="insertReview" parameterType="review">
 		insert into review_tbl(
+			res_num,
 			user_id,
 			score,
 			rev_content
 		) values (
+			#{resNum },
 			#{userId },
 			#{score },
 			#{revContent }		
 		)
 	</insert>
+	
+	<!-- 과거 이용 조회(리뷰용) -->
+	<select id="getPastOneOrder" parameterType="int" resultType="Order">
+		select
+			ot.res_num as resNum,
+			ot.user_id as userId,
+			to_char(ot.res_indate, 'yyyy-mm-dd') as resIndate,
+			ht.des_nm as desNm,
+			ot.hair_type as hairType
+		from
+			order_tbl ot,
+			hairSalon_tbl ht
+		where
+			ot.des_num = ht.des_num
+			and
+			res_indate &lt; sysdate
+			and
+			ot.res_num = #{resNum }
+	</select>
+	
+	<!-- 후기 조회 -->
+	<select id="getReviewList" resultType="Review">
+		select
+			user_id as userId,
+			score as score,
+			to_char(rev_indate, 'yyyy-mm-dd') as revIndate,
+			rev_Content as revContent
+		from
+			review_tbl
+	</select>
 </mapper>

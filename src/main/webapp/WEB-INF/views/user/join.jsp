@@ -2,9 +2,26 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> 
+<![endif]-->
+<!--[if IE 7]> <html class="no-js lt-ie9 lt-ie8" lang="en"> 
+<![endif]-->
+<!--[if IE 8]> <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
 <html>
 <head>
-<meta charset="UTF-8">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta charset="UTF-8">
+	
+	<link rel="stylesheet" type="text/css" href="/resources/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="/resources/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="/resources/css/templatemo-style.css">
+	
+	<!-- JavaScripts -->
+	<script src="/resources/js/vendor/jquery-1.10.2.min.js"></script>
+	<script src="/resources/js/vendor/modernizr.min.js"></script>
 <title>회원가입</title>
 <script type="text/javascript" src="/resources/js/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
@@ -80,6 +97,32 @@
 </script>
 </head>
 <body>
+<header class="site-header" id="top">
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container">
+                <div class="row">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+                          <i class="fa fa-bars"></i>
+                        </button>
+                        <div class="logo-wrapper">
+                            <a class="navbar-brand" href="/">
+                                <p>T<em>imeline</em></p>
+                            </a>
+                        </div>  
+                    </div>
+                    <div class="collapse navbar-collapse" id="main-menu">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><span></span><a href="/" class="home">Home</a></li>
+                            <li><span></span><a href="/order/reserve" class="about">예약하기</a></li>
+                            <li><span></span><a href="#map" class="map">Location</a></li>
+                            <li><span></span><a href="#third-section" class="contact">Contact</a></li>
+                        </ul>
+                    </div>
+                </div> 
+            </div>
+        </nav>
+    </header>
 	<h1>[ 회원가입 ]</h1>
 	
 	<form action="/user/join" method="post" onsubmit="return formChk();">
@@ -87,8 +130,12 @@
 			<tr>
 				<th>ID</th>
 				<td>
-					<input type="text" id="userId" name="userId">
-					<input type="button" value="ID중복검사" onclick="idChk();">
+				  <div style="float:left; margin-right:10px;">
+					<input type="text" id="userId" name="userId"> 
+				  </div>
+				  <div style="float:right; margin-right:10px;">
+					<input type="button" value="ID중복검사" style="font-weight : bold;" onclick="idChk();">
+				  </div>
 				</td>
 			</tr>
 			<tr>
@@ -108,9 +155,27 @@
 				<td><input type="text" name="userTel"></td>
 			</tr>
 			<tr>
-				<td colspan="4"><input type="submit" value="회원가입"></td>
+				<td colspan="4"><input type="submit" value="회원가입" style="font-weight : bold ;"></td>
 			</tr>
 		</table>
 	</form>
+	<footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            <div class="copyright-text">
+                                <p>Copyright &copy; 2084 <a href="#">Company Name</a></p>
+                            </div>
+                        </div>
+                    </div>    
+                </div>
+            </div>
+        </div>
+    </footer>
+		<script type="text/javascript" src="js/vendor/bootstrap.min.js"></script>
+		<script type="text/javascript" src="js/custom.js"></script>
+</body>
 </body>
 </html>

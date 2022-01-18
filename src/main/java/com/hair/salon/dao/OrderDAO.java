@@ -1,6 +1,7 @@
 package com.hair.salon.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -96,6 +97,19 @@ public class OrderDAO {
 		try {
 			mapper = session.getMapper(OrderMapper.class);
 			result = mapper.getReviewList();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	/* 과거 이용 조회(리뷰용) */
+	public OrderVO getPastOneOrder(int resNum) {
+		OrderVO result = null;
+		OrderMapper mapper = null;
+		try {
+			mapper = session.getMapper(OrderMapper.class);
+			result = mapper.getPastOneOrder(resNum);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -26,6 +26,18 @@
 	});
 	
 	function formChk(){
+		
+		if(($("input[name=score]").val()) == 0){
+			alert("점수를 매겨주세요.");
+			return false;
+		}
+		
+		var revContent = $("#revContent").val();
+		if(revContent == "" || revContent == null) {
+			alert("후기 내용을 작성해주세요.");
+			return false;
+		}
+			
 		var result = confirm("후기 내용은 수정할 수 없습니다. 정말로 등록하시겠습니까?");
 		
 		if(result) {
@@ -52,21 +64,18 @@
 <body>
 	<h2>후기 작성</h2>
 	<form action="/review" method="post" onsubmit="return formChk();">
+	<input type="hidden" name="resNum" value="${pastOrder.resNum }">
 		<table>
 				<tr>
-					<th>후기 선택</th>
 					<th>시술 받은 날</th>
 					<th>디자이너</th>
 					<th>시술 내용</th>
 				</tr>
-				<c:forEach items ="${orderList }" var="order">
-						<tr>
-							<td><input type="checkbox" name="resNum" value="${order.resNum }"></td>
-							<td>${order.resIndate }</td>
-							<td>${order.desNm }</td>
-							<td>${order.hairType }</td>
-						</tr>
-				</c:forEach>
+				<tr>
+					<td>${pastOrder.resIndate }</td>
+					<td>${pastOrder.desNm }</td>
+					<td>${pastOrder.hairType }</td>
+				</tr>
 		</table>
 		
 		<select name="starScore" id="starScore">
@@ -87,7 +96,7 @@
 			<span id="star5">★</span>
 		</div>
 		
-		<textarea rows="10" cols="50" name="revContent"></textarea>
+		<textarea rows="10" cols="50" id="revContent" name="revContent"></textarea>
 		<input type="submit" value="등록">
 	</form>
 	

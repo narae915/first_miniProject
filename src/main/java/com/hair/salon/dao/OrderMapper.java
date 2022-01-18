@@ -1,6 +1,7 @@
 package com.hair.salon.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.hair.salon.vo.OrderVO;
 import com.hair.salon.vo.ReviewVO;
@@ -24,5 +25,8 @@ public interface OrderMapper {
 
 	/* 리뷰 조회 */
 	ArrayList<ReviewVO> getReviewList();
+
+	/* 과거 이용 조회(리뷰용) */
+	OrderVO getPastOneOrder(int resNum);
 
 }

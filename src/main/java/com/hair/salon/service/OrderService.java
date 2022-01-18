@@ -1,6 +1,7 @@
 package com.hair.salon.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,7 +25,7 @@ public class OrderService {
 	public ArrayList<OrderVO> getPastOrder(String userId) {
 		return dao.getPastOrder(userId);
 	}
-
+	
 	/* 예약 */
 	public boolean insertReserve(String loginId, int desNum, String resIndate, String hairType, int price) 
 	{
@@ -50,6 +51,11 @@ public class OrderService {
 	/* 리뷰 내역 조회 */
 	public ArrayList<ReviewVO> getReviewList() {
 		return dao.getReviewList();
+	}
+	
+	/* 과거 이용 조회(리뷰용) */
+	public OrderVO getPastOneOrder(int resNum) {
+		return dao.getPastOneOrder(resNum);
 	}
 
 } // class OrderService
